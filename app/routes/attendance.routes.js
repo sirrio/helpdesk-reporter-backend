@@ -12,7 +12,9 @@ module.exports = app => {
 
     app.post('/api/attendance/', [authJwt.verifyToken, authJwt.isModerator], controller.create);
     app.get('/api/attendance/:id', [authJwt.verifyToken, authJwt.isModerator], controller.findOne);
+    app.get('/api/attendance/s/:semester', [authJwt.verifyToken, authJwt.isModerator], controller.findAllBySemester);
     app.get('/api/attendance/u/:user', [authJwt.verifyToken, authJwt.isModerator], controller.findAllByUser);
+    app.get('/api/attendance/u/:user/s/:semester', [authJwt.verifyToken, authJwt.isModerator], controller.findAllByUserAndSemester);
     app.put('/api/attendance/u/:user/:id', [authJwt.verifyToken, authJwt.isModerator], controller.updateByUser);
     app.delete('/api/attendance/u/:user/:id', [authJwt.verifyToken, authJwt.isModerator], controller.deleteByUser);
 

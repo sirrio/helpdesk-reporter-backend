@@ -62,9 +62,44 @@ exports.findAll = (request, response) => {
     });
 };
 
+exports.findAllBySemester = (request, response) => {
+    const semester = request.params.semester;
+    Attendance.find({semester: semester}).populate('tutor', 'username').sort({
+        date: 'descending',
+        startTime: 'ascending'
+    }).then(data => {
+        if (!data) {
+            response.status(404).send({message: 'failure finding all attendance'});
+        } else {
+            response.send(data);
+        }
+    }).catch(error => {
+        console.log(error);
+        response.status(500).send({message: error.message || 'error on attendance.findAll'});
+    });
+};
+
 exports.findAllByUser = (request, response) => {
     const id = request.params.user;
     Attendance.find({tutor: id}).populate('tutor', 'username').sort({
+        date: 'descending',
+        startTime: 'ascending'
+    }).then(data => {
+        if (!data) {
+            response.status(404).send({message: 'failure finding all attendance'});
+        } else {
+            response.send(data);
+        }
+    }).catch(error => {
+        console.log(error);
+        response.status(500).send({message: error.message || 'error on attendance.findAll'});
+    });
+};
+
+exports.findAllByUserAndSemester = (request, response) => {
+    const id = request.params.user;
+    const semester = request.params.semester;
+    Attendance.find({tutor: id, semester: semester}).populate('tutor', 'username').sort({
         date: 'descending',
         startTime: 'ascending'
     }).then(data => {
