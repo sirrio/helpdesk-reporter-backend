@@ -1,18 +1,19 @@
 const mongoose = require('mongoose');
 
-const User = mongoose.model(
-    'User',
-    new mongoose.Schema({
-        username: String,
-        email: String,
-        password: String,
-        roles: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Role'
-            }
-        ]
-    })
-);
+const userSchema = new mongoose.Schema({
+    username: String,
+    email: String,
+    password: String,
+    roles: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Role'
+        }
+    ]
+});
+
+userSchema.set('toJSON', {virtuals: true});
+
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

@@ -13,4 +13,7 @@ module.exports = app => {
     app.get('/api/user', [authJwt.verifyToken, authJwt.isAdmin], controller.findAll);
 
     app.get('/api/user/:id', controller.findOne);
+
+    app.post('/api/user/admin/', [authJwt.verifyToken, authJwt.isAdmin], controller.updateRole);
+    app.post('/api/user/password', [authJwt.verifyToken, authJwt.isAdmin], controller.updatePassword);
 };
